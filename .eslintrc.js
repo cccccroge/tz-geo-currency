@@ -9,6 +9,7 @@ const customized = stylistic.configs.customize({
 
 module.exports = {
   "env": {
+    "es6": true,
     "browser": true,
   },
   "extends": ["eslint:recommended"],

@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fetch-tz-data": "node ./script/updateTimezonesData.js"
+    "fetch-tz-data": "node ./script/updateTimezonesData.js",
+    "fetch-countries-data": "node ./script/updateCountriesData.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/cccccroge/tz-geo-currency#readme",
   "devDependencies": {
+    "node-fetch": "^2.7.0",
     "rollup": "^4.14.0",
     "tar-fs": "^3.0.5"
   }

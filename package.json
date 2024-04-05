@@ -1,0 +1,23 @@
+{
+  "name": "tz-geo-currency",
+  "version": "1.0.0",
+  "author": "Allen He <pooopooo543@gmail.com>",
+  "description": "A javaScript library offering a privacy-friendly alternative to IP-based geolocation, using timezone information to infer a user's country and currency.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fetch-tz-data": "node ./script/updateTimezonesData.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cccccroge/tz-geo-currency.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cccccroge/tz-geo-currency/issues"
+  },
+  "homepage": "https://github.com/cccccroge/tz-geo-currency#readme",
+  "devDependencies": {
+    "tar-fs": "^3.0.5"
+  }
+}

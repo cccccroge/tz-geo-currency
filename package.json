@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/cccccroge/tz-geo-currency#readme",
   "devDependencies": {
+    "rollup": "^4.14.0",
     "tar-fs": "^3.0.5"
   }
 }

@@ -1,11 +1,17 @@
 # Node script for fetching data
 script/
 
+# Uncompile source code
+src/
+
 # Test files
 tests/
 
 # Configuration files
 .eslintrc.js
 .nvmrc
-.babel.config.js
+babel.config.js
 rollup.config.mjs
+
+# Misc
+.github/

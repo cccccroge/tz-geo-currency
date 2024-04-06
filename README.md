@@ -10,31 +10,31 @@ npm install tz-geo-currency
 
 ## Usage
 ### Infer User's Country by TimeZone
-Outputs the most probable user's country (in ISO 3166-1 alpha-2) based on timezone, e.g., `'US'` if TZ is `America/New_York`, which is accurate,
+Outputs the most probable user's country (in ISO 3166-1 alpha-2) based on timezone, e.g., get `'US'` if TZ is `America/New_York`.
 
 For the accuracy and limitations, see [FAQ](#faq)
 ```js
 import { TL } from 'tz-geo-currency';
 
-const country = TL.getCountry();
+const country = TL.getCountry(); // 'US'
 ```
 
 ### Retrieving Possible Countries for Timezone
-Outputs an array of all possible countries based on timezone, e.g., `['US']`
+Outputs an array of all possible countries based on timezone
 ```js
-const countries = TL.getCountries();
+const countries = TL.getCountries(); //['US'], assume the TZ is same
 ```
 
 ### Getting the Currencies for the inferred User's Country
-Outputs an array of currency codes (in ISO 4217) of the most probable country, which derived from timezone, e.g., `['USD']`
+Outputs an array of currency codes (in ISO 4217) of the most probable country, which derived from timezone
 ```js
-const currencies = TL.getCurrencies();
+const currencies = TL.getCurrencies(); // ['USD'], assume the TZ is same
 ```
 
 ### Fetching Currencies for a Specified Country Code
-Outputs an array of currency codes for Japan, e.g., `['JPY']`
+Outputs an array of currency codes on given country
 ```js
-const currencies = TL.getCurrenciesFromCountry('JP');
+const currencies = TL.getCurrenciesFromCountry('JP'); // ['JPY']
 ```
 
 ## FAQ
@@ -42,7 +42,7 @@ const currencies = TL.getCurrenciesFromCountry('JP');
 
 `TL.getCountry()` is at least 89% accurate. Use `TL._reportAccuracy()` to see specific stats and understand its accuracy for your needs. In cases where your application doesn't encounter complex timezones, the accuracy may align closely with IP Geolocation methods (which is [around 99%](https://www.google.com/search?q=how+accurate+is+IP+geolocation+in+country+level&sourceid=chrome&ie=UTF-8)).
 
-Here's the full output of `TL._reportAccuracy()` from latest version.
+Here's the brief output of `TL._reportAccuracy()` from latest version.
 ```
 {
   accuracy: 89.42307692307693,
@@ -83,7 +83,7 @@ Here's the full output of `TL._reportAccuracy()` from latest version.
   ]
 }
 ```
-Note that it might still work if the user's timezone is in `inaccurateList`. Since `getCountry` will return the first country in the [IANA TZ dataset](https://data.iana.org/time-zones/tzdb/zone1970.tab), which is the country of most-populous city compared to other's
+Note that it *might still work* if the user's timezone is in `inaccurateList`. Since `getCountry` will return the first country in the [IANA TZ dataset](https://data.iana.org/time-zones/tzdb/zone1970.tab), which is the country of most-populous city compared to other's
 
 ### What metadata is supported?
 Currently, the library identifies country and currency. We're focused on reliably providing these key details. With the country code, you can easily fetch more specific metadata as needed for your application.

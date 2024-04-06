@@ -23,7 +23,7 @@ function convertData(data) {
 }
 
 function saveData(data) {
-  const formattedData = `export const data = ${JSON.stringify(data, null, 2)};`;
+  const formattedData = `export default ${JSON.stringify(data, null, 2)};`;
   fs.writeFileSync(OUTPUT_JS, formattedData);
 }
 

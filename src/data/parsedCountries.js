@@ -1,4 +1,4 @@
-export default data = [
+export default [
   {
     "cca2": "AW",
     "currencies": [

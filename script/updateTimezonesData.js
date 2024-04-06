@@ -76,7 +76,7 @@ function parseAndSave(filePath) {
 
   fs.writeFileSync(
     OUTPUT_JS,
-    `export const data = ${JSON.stringify(parsedData, null, 2)};`,
+    `export default ${JSON.stringify(parsedData, null, 2)};`,
   );
 }
 

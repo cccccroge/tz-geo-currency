@@ -2,8 +2,9 @@
   "name": "tz-geo-currency",
   "version": "1.0.0",
   "author": "Allen He <pooopooo543@gmail.com>",
-  "description": "A javaScript library offering a privacy-friendly alternative to IP-based geolocation, using timezone information to infer a user's country and currency.",
-  "main": "index.js",
+  "description": "A JavaScript library offering an alternative to IP-based geolocation, using timezone information to infer a user's country and currency.",
+  "main": "dist/tl.cjs.js",
+  "module": "dist/tl.esm.js",
   "scripts": {
     "test": "jest",
     "lint": "eslint ./src/**/*.js --quiet",

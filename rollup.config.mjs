@@ -7,11 +7,11 @@ export default {
   ],
   output: [
     {
-      file: 'dist/bundle.cjs.js',
+      file: 'dist/tl.cjs.js',
       format: 'cjs',
     },
     {
-      file: 'dist/bundle.esm.js',
+      file: 'dist/tl.esm.js',
       format: 'es',
     },
   ],

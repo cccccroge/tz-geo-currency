@@ -17,7 +17,7 @@ module.exports = {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "ignorePatterns": ['.eslintrc.js', "script/", "src/data/"],
+  "ignorePatterns": ['.eslintrc.js', "script/", "src/data/", "dist/"],
   "plugins": ["@stylistic"],
   "rules": {
     ...customized.rules,

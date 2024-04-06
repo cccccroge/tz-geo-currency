@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src/**/*.js --quiet",
     "fetch-tz-data": "node ./script/updateTimezonesData.js",
-    "fetch-countries-data": "node ./script/updateCountriesData.js"
+    "fetch-countries-data": "node ./script/updateCountriesData.js",
+    "build": "rollup --config"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/cccccroge/tz-geo-currency#readme",
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
     "@stylistic/eslint-plugin": "^1.7.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",

@@ -1,4 +1,4 @@
-export const data = [
+export default data = [
   {
     "cca2": "AW",
     "currencies": [

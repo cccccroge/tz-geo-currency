@@ -1,17 +1,105 @@
 # tz-geo-currency
-A JavaScript library offering a privacy-friendly alternative to IP-based geolocation, using timezone information to infer a user's country and currency.
+A JavaScript library offering an alternative to IP-based geolocation, using timezone information to infer a user's country and currency.
 
-# Motivation
-In 2024, services with potential global markets still face challenges in auto-detecting users' countries and currencies—key elements for payments and product displays. The Geolocation API, while capable of pinpointing a user's region, requires consent, making it an intrusive option for simple content localization. This underscores the necessity for a more nuanced method to determine user locales discreetly, respecting their privacy.
+see [Motivation](#motivation)
 
-## Solving the Problem
-Currency and country are typically closely related, as each country usually has its own official currency that forms a fundamental part of its economic identity. An effective method to deduce these attributes is by utilizing "timeZone" information, inspired by a [Stack Overflow comment](https://stackoverflow.com/a/65043902). Knowing a user's timezone offers a significant clue to their country, which, in turn, is often associated with a primary currency.
+## Installation
+```bash
+npm install tz-geo-currency
+```
 
-## Tradeoffs
-Typically, the IP geolocation method is the standard approach for detecting a user's country and currency, leveraging databases that link IP addresses to physical locations for accurate localization.
+## Usage
+### Infer User's Country by TimeZone
+Outputs the most probable user's country (in ISO 3166-1 alpha-2) based on timezone, e.g., `'US'` if TZ is `America/New_York`, which is accurate,
 
-Trade-offs between the timezone and IP geolocation methods:
+For the accuracy and limitations, see [FAQ](#faq)
+```js
+import { TL } from 'tz-geo-currency';
 
-- Privacy: Timezone detection offers a privacy-friendly alternative, not requiring IP data, whereas IP geolocation provides precise location info but may raise privacy concerns.
-- Accuracy: IP geolocation leads in accuracy, directly correlating to the user's actual location. Timezone-based methods, while simpler, can be less precise due to timezones covering multiple countries.
-- Cost-Effectiveness: Implementing timezone detection is generally more straightforward and cost-effective, avoiding the potential expenses associated with IP geolocation services.
+const country = TL.getCountry();
+```
+
+### Retrieving Possible Countries for Timezone
+Outputs an array of all possible countries based on timezone, e.g., `['US']`
+```js
+const countries = TL.getCountries();
+```
+
+### Getting the Currencies for the inferred User's Country
+Outputs an array of currency codes (in ISO 4217) of the most probable country, which derived from timezone, e.g., `['USD']`
+```js
+const currencies = TL.getCurrencies();
+```
+
+### Fetching Currencies for a Specified Country Code
+Outputs an array of currency codes for Japan, e.g., `['JPY']`
+```js
+const currencies = TL.getCurrenciesFromCountry('JP');
+```
+
+## FAQ
+### How accurate is TL.getCountry()?
+
+`TL.getCountry()` is at least 89% accurate. Use `TL._reportAccuracy()` to see specific stats and understand its accuracy for your needs. In cases where your application doesn't encounter complex timezones, the accuracy may align closely with IP Geolocation methods (which is [around 99%](https://www.google.com/search?q=how+accurate+is+IP+geolocation+in+country+level&sourceid=chrome&ie=UTF-8)).
+
+Here's the full output of `TL._reportAccuracy()` from latest version.
+```
+{
+  accuracy: 89.42307692307693,
+  inaccurateList: [
+    [ 'Africa/Abidjan', [Array] ],
+    [ 'Africa/Johannesburg', [Array] ],
+    [ 'Africa/Lagos', [Array] ],
+    [ 'Africa/Maputo', [Array] ],
+    [ 'Africa/Nairobi', [Array] ],
+    [ 'America/Panama', [Array] ],
+    [ 'America/Phoenix', [Array] ],
+    [ 'America/Puerto_Rico', [Array] ],
+    [ 'America/Toronto', [Array] ],
+    [ 'Asia/Bangkok', [Array] ],
+    [ 'Asia/Dubai', [Array] ],
+    [ 'Asia/Kuching', [Array] ],
+    [ 'Asia/Qatar', [Array] ],
+    [ 'Asia/Riyadh', [Array] ],
+    [ 'Asia/Singapore', [Array] ],
+    [ 'Asia/Yangon', [Array] ],
+    [ 'Europe/Belgrade', [Array] ],
+    [ 'Europe/Berlin', [Array] ],
+    [ 'Europe/Brussels', [Array] ],
+    [ 'Europe/Helsinki', [Array] ],
+    [ 'Europe/London', [Array] ],
+    [ 'Europe/Paris', [Array] ],
+    [ 'Europe/Prague', [Array] ],
+    [ 'Europe/Rome', [Array] ],
+    [ 'Europe/Simferopol', [Array] ],
+    [ 'Europe/Zurich', [Array] ],
+    [ 'Indian/Maldives', [Array] ],
+    [ 'Pacific/Auckland', [Array] ],
+    [ 'Pacific/Guadalcanal', [Array] ],
+    [ 'Pacific/Guam', [Array] ],
+    [ 'Pacific/Pago_Pago', [Array] ],
+    [ 'Pacific/Port_Moresby', [Array] ],
+    [ 'Pacific/Tarawa', [Array] ]
+  ]
+}
+```
+Note that it might still work if the user's timezone is in `inaccurateList`. Since `getCountry` will return the first country in the [IANA TZ dataset](https://data.iana.org/time-zones/tzdb/zone1970.tab), which is the country of most-populous city compared to other's
+
+### What metadata is supported?
+Currently, the library identifies country and currency. We're focused on reliably providing these key details. With the country code, you can easily fetch more specific metadata as needed for your application.
+
+
+## Motivation
+In 2024, it remains not straightforward for global web applications to automatically detect users' countries and currencies, which are essential for processing payments and customizing product displays. The [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API), while capable of accurately locating users, is often considered too invasive for the mere purpose of content localization, as it requires user consent upon page load.
+
+### The Standard: IP Geolocation
+Traditionally, services use [IP geolocation](https://en.wikipedia.org/wiki/Internet_geolocation) to identify user locations, linking IP addresses to physical locations for precise localization. While effective, it introduces challenges related to complexity and cost associated with maintaining accurate IP geolocation databases.
+
+### A Streamlined Alternative: Timezone-Based Detection
+An alternative, inspired by a [Stack Overflow suggestion](https://stackoverflow.com/a/65043902), leverages timezone information to infer countries and currencies. This method, bypassing the need for extensive databases, simplifies implementation and reduces operational costs.
+
+
+### Trade-offs to Consider
+- Privacy: Unlike IP geolocation, timezone detection doesn't handle sensitive data, offering a discreet localization method.
+- Accuracy: IP geolocation is more accurate, directly associating users with locations. Timezone-based detection, less precise, is still practical for applications where exact localization isn't critical.
+- Cost and Simplicity: The timezone method is straightforward and avoids the costs related to IP geolocation services, making it an economical choice for broad use.

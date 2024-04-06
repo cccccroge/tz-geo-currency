@@ -1,0 +1,11 @@
+# Node script for fetching data
+script/
+
+# Test files
+tests/
+
+# Configuration files
+.eslintrc.js
+.nvmrc
+.babel.config.js
+rollup.config.mjs

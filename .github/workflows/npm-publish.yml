@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm lint
-      - run: npm test
+      - run: npm run lint
+      - run: npm run test
 
   build-and-publish:
     needs: test
@@ -29,7 +29,7 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm build
+      - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

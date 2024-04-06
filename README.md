@@ -1,37 +1,47 @@
 # tz-geo-currency
+![npm](https://img.shields.io/npm/v/tz-geo-currency.svg)
+![Build Status](https://github.com/cccccroge/tz-geo-currency/actions/workflows/npm-publish.yml/badge.svg)
+![License](https://img.shields.io/github/license/cccccroge/tz-geo-currency.svg)
+
+
 A JavaScript library offering an alternative to IP-based geolocation, using timezone information to infer a user's country and currency.
 
 see [Motivation](#motivation)
 
 ## Installation
+### Using NPM
 ```bash
 npm install tz-geo-currency
 ```
+### Using Yarn
+```bash
+yarn add tz-geo-currency
+```
 
 ## Usage
-### Infer User's Country by TimeZone
+### `getCountry()`
 Outputs the most probable user's country (in ISO 3166-1 alpha-2) based on timezone, e.g., get `'US'` if TZ is `America/New_York`.
 
 For the accuracy and limitations, see [FAQ](#faq)
 ```js
-import { TL } from 'tz-geo-currency';
+import { TL } from 'tz-geo-currency'; // TL stands for TimeLocate
 
 const country = TL.getCountry(); // 'US'
 ```
 
-### Retrieving Possible Countries for Timezone
+### `getCountries()`
 Outputs an array of all possible countries based on timezone
 ```js
 const countries = TL.getCountries(); //['US'], assume the TZ is same
 ```
 
-### Getting the Currencies for the inferred User's Country
+### `getCurrencies()`
 Outputs an array of currency codes (in ISO 4217) of the most probable country, which derived from timezone
 ```js
 const currencies = TL.getCurrencies(); // ['USD'], assume the TZ is same
 ```
 
-### Fetching Currencies for a Specified Country Code
+### `getCurrenciesFromCountry(countryCode: string)`
 Outputs an array of currency codes on given country
 ```js
 const currencies = TL.getCurrenciesFromCountry('JP'); // ['JPY']

@@ -1,5 +1,6 @@
 import { countryToCurrencies } from './mappings/countryToCurrencies'
 import { timezoneToCountries } from './mappings/timezoneToCountries'
+import parsedZones from './data/parsedZone1970'
 
 // TL namespace, stands for `TimeLocate`
 export const TL = {}
@@ -46,6 +47,30 @@ TL.getCurrencies = function () {
  */
 TL.getCurrenciesFromCountry = function (countryCode) {
   return countryToCurrencies(countryCode)
+}
+
+TL._reportAccuracy = function () {
+  const record = {}
+  parsedZones.forEach((z) => {
+    z.tz.forEach((tz) => {
+      if (!record[tz]) {
+        record[tz] = z.codes.split(',')
+      }
+      else {
+        throw new Error('Dataset malformed!')
+      }
+    })
+  })
+
+  const recordArr = Object.entries(record)
+  const accurateList = recordArr.filter(entry => entry[1].length === 1)
+  const inaccurateList = recordArr.filter(entry => entry[1].length > 1)
+  const accuracy = (accurateList.length / recordArr.length) * 100
+
+  return {
+    accuracy,
+    inaccurateList: inaccurateList.sort(),
+  }
 }
 
 function getTimezone() {

@@ -1,6 +1,6 @@
 {
   "name": "tz-geo-currency",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Allen He <pooopooo543@gmail.com>",
   "description": "A JavaScript library offering an alternative to IP-based geolocation, using timezone information to infer a user's country and currency.",
   "main": "dist/tl.cjs.js",

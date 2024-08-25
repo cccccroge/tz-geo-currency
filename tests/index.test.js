@@ -20,6 +20,12 @@ describe('getCountry', () => {
     expect(country).toBe('CN')
   })
 
+  test('Asia/Saigon', () => {
+    mockBrowserTimezone('Asia/Saigon')
+    const country = TL.getCountry()
+    expect(country).toBe('VN')
+  })
+
   test('America/New_York', () => {
     mockBrowserTimezone('America/New_York')
     const country = TL.getCountry()

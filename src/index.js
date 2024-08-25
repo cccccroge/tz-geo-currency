@@ -76,7 +76,10 @@ TL._reportAccuracy = function () {
 
 function getTimezone() {
   const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone
-  // The browser's timezone follows CLDR standards, which include some outdated timezones.
-  // So, we need to convert it back to the up-to-date version.
+  /*
+   * The browser's timezone follows CLDR standards, which include some outdated timezones.
+   * So, we need to convert it back to the up-to-date version.
+   * https://github.com/cccccroge/tz-geo-currency/issues/1
+   */
   return parsedBackward[browserTz] || browserTz
 }

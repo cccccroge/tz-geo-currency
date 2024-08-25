@@ -1,6 +1,7 @@
 import { countryToCurrencies } from './mappings/countryToCurrencies'
 import { timezoneToCountries } from './mappings/timezoneToCountries'
 import parsedZones from './data/parsedZone1970'
+import parsedBackward from './data/parsedBackward'
 
 // TL namespace, stands for `TimeLocate`
 export const TL = {}
@@ -74,5 +75,8 @@ TL._reportAccuracy = function () {
 }
 
 function getTimezone() {
-  return Intl.DateTimeFormat().resolvedOptions().timeZone
+  const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone
+  // The browser's timezone follows CLDR standards, which include some outdated timezones.
+  // So, we need to convert it back to the up-to-date version.
+  return parsedBackward[browserTz] || browserTz
 }

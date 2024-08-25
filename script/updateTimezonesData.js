@@ -101,16 +101,10 @@ function processBackward(lines) {
     if (parts[0] !== "Link") return; // Skip non-Link lines
 
     const targetTz = parts[1];
-    const aliases = [parts[2]];
-
+    parsedData[parts[2]] = targetTz;
     if (parts[3] === "#=" && parts[4]) {
-      aliases.push(parts[4]);
+      parsedData[parts[4]] = targetTz;
     }
-
-    if (!parsedData[targetTz]) {
-      parsedData[targetTz] = [];
-    }
-    parsedData[targetTz].push(...aliases);
   });
 
   return parsedData;

@@ -49,6 +49,24 @@ describe('getCountry', () => {
     const country = TL.getCountry()
     expect(country).toBe('EG')
   })
+
+  test('Asia/Kuala_Lumpur', () => {
+    mockBrowserTimezone('Asia/Kuala_Lumpur')
+    const country = TL.getCountry()
+    expect(country).toBe('MY')
+  })
+
+  test('Asia/Kuching', () => {
+    mockBrowserTimezone('Asia/Kuching')
+    const country = TL.getCountry()
+    expect(country).toBe('MY')
+  })
+
+  test('Asia/Singapore', () => {
+    mockBrowserTimezone('Asia/Singapore')
+    const country = TL.getCountry()
+    expect(country).toBe('SG')
+  })
 })
 
 describe('getCountries', () => {

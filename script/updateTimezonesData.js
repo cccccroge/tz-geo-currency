@@ -5,9 +5,9 @@ const tar = require("tar-fs");
 const path = require("path");
 
 const TZ_DATA_URL =
-  "https://data.iana.org/time-zones/releases/tzdata2024a.tar.gz";
+  "https://data.iana.org/time-zones/releases/tzdata2025b.tar.gz";
 const TEMP = path.join(__dirname, "tmp");
-const DOWNLOAD_PATH = path.join(TEMP, "tzdata2024a.tar.gz");
+const DOWNLOAD_PATH = path.join(TEMP, "tzdata2025b.tar.gz");
 const ZONE_1970_FILE = path.join(TEMP, "zone1970.tab");
 const BACKWARD_FILE = path.join(TEMP, "backward");
 const OUTPUT_ZONE_1970_JS = path.join(

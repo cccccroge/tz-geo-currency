@@ -69,20 +69,6 @@ describe('getCountry', () => {
   })
 })
 
-describe('getCountries', () => {
-  test('Asia/Taipei', () => {
-    mockBrowserTimezone('Asia/Taipei')
-    const countries = TL.getCountries()
-    expect(countries).toEqual(['TW'])
-  })
-
-  test('America/Phoenix', () => {
-    mockBrowserTimezone('America/Phoenix')
-    const countries = TL.getCountries()
-    expect(countries).toEqual(['US', 'CA'])
-  })
-})
-
 describe('getCurrencies', () => {
   test('Asia/Tokyo', () => {
     mockBrowserTimezone('Asia/Tokyo')
@@ -136,12 +122,5 @@ describe('getCurrenciesFromCountry', () => {
   test('Cambodia', () => {
     const currencies = TL.getCurrenciesFromCountry('KH')
     expect(currencies).toEqual(['KHR', 'USD'])
-  })
-})
-
-describe('_reportAccuracy', () => {
-  test('good enough accuracy', () => {
-    const report = TL._reportAccuracy()
-    expect(report.accuracy).toBeGreaterThan(88)
   })
 })

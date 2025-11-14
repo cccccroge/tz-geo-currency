@@ -220,6 +220,7 @@ export default [
     "codes": "CL",
     "tz": [
       "America/Santiago",
+      "America/Coyhaique",
       "America/Punta_Arenas",
       "Pacific/Easter"
     ]
@@ -512,7 +513,7 @@ export default [
     ]
   },
   {
-    "codes": "JP",
+    "codes": "JP,AU",
     "tz": [
       "Asia/Tokyo"
     ]
@@ -630,8 +631,7 @@ export default [
     "codes": "MN",
     "tz": [
       "Asia/Ulaanbaatar",
-      "Asia/Hovd",
-      "Asia/Choibalsan"
+      "Asia/Hovd"
     ]
   },
   {
@@ -922,7 +922,7 @@ export default [
     ]
   },
   {
-    "codes": "SG,MY",
+    "codes": "SG,AQ,MY",
     "tz": [
       "Asia/Singapore"
     ]

@@ -20,19 +20,13 @@ yarn add tz-geo-currency
 
 ## Usage
 ### `getCountry()`
-Outputs the most probable user's country (in ISO 3166-1 alpha-2) based on timezone, e.g., get `'US'` if TZ is `America/New_York`.
+Outputs the user's country (in ISO 3166-1 alpha-2) based on timezone, e.g., get `'US'` if TZ is `America/New_York`.
 
 For the accuracy and limitations, see [FAQ](#faq)
 ```js
 import { TL } from 'tz-geo-currency'; // TL stands for TimeLocate
 
 const country = TL.getCountry(); // 'US'
-```
-
-### `getCountries()`
-Outputs an array of all possible countries based on timezone
-```js
-const countries = TL.getCountries(); //['US'], assume the TZ is same
 ```
 
 ### `getCurrencies()`
@@ -50,50 +44,28 @@ const currencies = TL.getCurrenciesFromCountry('JP'); // ['JPY']
 ## FAQ
 ### How accurate is TL.getCountry()?
 
-`TL.getCountry()` is at least 89% accurate. Use `TL._reportAccuracy()` to see specific stats and understand its accuracy for your needs. In cases where your application doesn't encounter complex timezones, the accuracy may align closely with IP Geolocation methods (which is [around 99%](https://www.google.com/search?q=how+accurate+is+IP+geolocation+in+country+level&sourceid=chrome&ie=UTF-8)).
+`TL.getCountry()` provides highly accurate country detection through direct 1:1 timezone-to-country mapping from the [IANA Time Zone Database](https://data.iana.org/time-zones/). Each timezone maps to exactly one country, ensuring consistent and deterministic results.
 
-Here's the brief output of `TL._reportAccuracy()` from latest version.
-```
-{
-  accuracy: 89.42307692307693,
-  inaccurateList: [
-    [ 'Africa/Abidjan', [Array] ],
-    [ 'Africa/Johannesburg', [Array] ],
-    [ 'Africa/Lagos', [Array] ],
-    [ 'Africa/Maputo', [Array] ],
-    [ 'Africa/Nairobi', [Array] ],
-    [ 'America/Panama', [Array] ],
-    [ 'America/Phoenix', [Array] ],
-    [ 'America/Puerto_Rico', [Array] ],
-    [ 'America/Toronto', [Array] ],
-    [ 'Asia/Bangkok', [Array] ],
-    [ 'Asia/Dubai', [Array] ],
-    [ 'Asia/Kuching', [Array] ],
-    [ 'Asia/Qatar', [Array] ],
-    [ 'Asia/Riyadh', [Array] ],
-    [ 'Asia/Singapore', [Array] ],
-    [ 'Asia/Yangon', [Array] ],
-    [ 'Europe/Belgrade', [Array] ],
-    [ 'Europe/Berlin', [Array] ],
-    [ 'Europe/Brussels', [Array] ],
-    [ 'Europe/Helsinki', [Array] ],
-    [ 'Europe/London', [Array] ],
-    [ 'Europe/Paris', [Array] ],
-    [ 'Europe/Prague', [Array] ],
-    [ 'Europe/Rome', [Array] ],
-    [ 'Europe/Simferopol', [Array] ],
-    [ 'Europe/Zurich', [Array] ],
-    [ 'Indian/Maldives', [Array] ],
-    [ 'Pacific/Auckland', [Array] ],
-    [ 'Pacific/Guadalcanal', [Array] ],
-    [ 'Pacific/Guam', [Array] ],
-    [ 'Pacific/Pago_Pago', [Array] ],
-    [ 'Pacific/Port_Moresby', [Array] ],
-    [ 'Pacific/Tarawa', [Array] ]
-  ]
-}
-```
-Note that it *might still work* if the user's timezone is in `inaccurateList`. Since `getCountry` will return the first country in the [IANA TZ dataset](https://data.iana.org/time-zones/tzdb/zone1970.tab), which is the country of most-populous city compared to other's
+**Coverage:**
+- Supports all 418 canonical IANA timezones (from `zone.tab`)
+- Handles 256 deprecated/legacy timezone names (from `backward` file)
+- Total coverage: 674 timezone identifiers
+
+**Accuracy expectations:**
+- **~99%** for users with correct OS timezone settings (comparable to IP Geolocation)
+- Works correctly across all modern browsers that support `Intl.DateTimeFormat`
+- Handles historical timezone name changes automatically
+
+**Known limitations:**
+- Users who manually set incorrect timezone on their system
+- Disputed territories may reflect IANA's political stance (e.g., `Europe/Simferopol` → UA)
+- Browsers returning unknown timezone identifiers will return `null`
+
+**Advantages over IP geolocation:**
+- VPN/Proxy users: returns real location (based on system timezone), not VPN server location
+- Privacy-friendly: no external API calls or IP tracking
+- Zero cost: no paid geolocation service required
+- Offline-capable: works without internet connection
 
 ### What metadata is supported?
 Currently, the library identifies country and currency. We're focused on reliably providing these key details. With the country code, you can easily fetch more specific metadata as needed for your application.

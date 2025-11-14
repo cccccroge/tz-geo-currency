@@ -49,19 +49,23 @@ describe('getCountry', () => {
     const country = TL.getCountry()
     expect(country).toBe('EG')
   })
-})
 
-describe('getCountries', () => {
-  test('Asia/Taipei', () => {
-    mockBrowserTimezone('Asia/Taipei')
-    const countries = TL.getCountries()
-    expect(countries).toEqual(['TW'])
+  test('Asia/Kuala_Lumpur', () => {
+    mockBrowserTimezone('Asia/Kuala_Lumpur')
+    const country = TL.getCountry()
+    expect(country).toBe('MY')
   })
 
-  test('America/Phoenix', () => {
-    mockBrowserTimezone('America/Phoenix')
-    const countries = TL.getCountries()
-    expect(countries).toEqual(['US', 'CA'])
+  test('Asia/Kuching', () => {
+    mockBrowserTimezone('Asia/Kuching')
+    const country = TL.getCountry()
+    expect(country).toBe('MY')
+  })
+
+  test('Asia/Singapore', () => {
+    mockBrowserTimezone('Asia/Singapore')
+    const country = TL.getCountry()
+    expect(country).toBe('SG')
   })
 })
 
@@ -118,12 +122,5 @@ describe('getCurrenciesFromCountry', () => {
   test('Cambodia', () => {
     const currencies = TL.getCurrenciesFromCountry('KH')
     expect(currencies).toEqual(['KHR', 'USD'])
-  })
-})
-
-describe('_reportAccuracy', () => {
-  test('good enough accuracy', () => {
-    const report = TL._reportAccuracy()
-    expect(report.accuracy).toBeGreaterThan(88)
   })
 })

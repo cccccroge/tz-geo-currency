@@ -5,15 +5,17 @@ const tar = require("tar-fs");
 const path = require("path");
 
 const TZ_DATA_URL =
-  "https://data.iana.org/time-zones/releases/tzdata2024a.tar.gz";
+  "https://data.iana.org/time-zones/releases/tzdata2025b.tar.gz";
 const TEMP = path.join(__dirname, "tmp");
-const DOWNLOAD_PATH = path.join(TEMP, "tzdata2024a.tar.gz");
+const DOWNLOAD_PATH = path.join(TEMP, "tzdata2025b.tar.gz");
 const ZONE_1970_FILE = path.join(TEMP, "zone1970.tab");
+const ZONE_FILE = path.join(TEMP, "zone.tab");
 const BACKWARD_FILE = path.join(TEMP, "backward");
 const OUTPUT_ZONE_1970_JS = path.join(
   __dirname,
   "../src/data/parsedZone1970.js",
 );
+const OUTPUT_ZONE_JS = path.join(__dirname, "../src/data/parsedZone.js");
 const OUTPUT_BACKWARD_JS = path.join(
   __dirname,
   "../src/data/parsedBackward.js",
@@ -43,7 +45,8 @@ const extract = async () => {
   return new Promise((resolve, reject) => {
     const gunzip = zlib.createGunzip();
     const extract = tar.extract(TEMP, {
-      ignore: (name) => ![ZONE_1970_FILE, BACKWARD_FILE].includes(name),
+      ignore: (name) =>
+        ![ZONE_1970_FILE, ZONE_FILE, BACKWARD_FILE].includes(name),
     });
     fs.createReadStream(DOWNLOAD_PATH)
       .on("error", reject)
@@ -110,6 +113,20 @@ function processBackward(lines) {
   return parsedData;
 }
 
+function processZone(lines) {
+  const parsedData = {};
+  lines.forEach((line) => {
+    if (line.startsWith("#") || line.trim() === "") return; // Skip comments and empty lines
+    const parts = line.split("\t");
+    const countryCode = parts[0];
+    const timezone = parts[2];
+
+    parsedData[timezone] = countryCode;
+  });
+
+  return parsedData;
+}
+
 (async () => {
   try {
     fs.mkdirSync(TEMP, { recursive: true });
@@ -124,6 +141,10 @@ function processBackward(lines) {
     parseAndSave(
       { inputPath: ZONE_1970_FILE, outputPath: OUTPUT_ZONE_1970_JS },
       processZone1970,
+    );
+    parseAndSave(
+      { inputPath: ZONE_FILE, outputPath: OUTPUT_ZONE_JS },
+      processZone,
     );
     parseAndSave(
       { inputPath: BACKWARD_FILE, outputPath: OUTPUT_BACKWARD_JS },
